@@ -10,24 +10,23 @@ int manage_menu()
 	int sel;
 	int fg = 0;
 	do{
-		
+		printf("\033[0;33m+***************************电话号码管理软件*********************+\033[0m\n");
+		printf("\033[0;33m|\t\t\t1. 添加					 |\033[0m\n");
+		printf("\033[0;33m|\t\t\t2. 删除					 |\033[0m\n");
+		printf("\033[0;33m|\t\t\t3. 查找					 |\033[0m\n");
+		printf("\033[0;33m|\t\t\t4. 显示所有记录				 |\033[0m\n");
+		printf("\033[0;33m|\t\t\t0. 退出					 |\033[0m\n");
+		printf("\033[0;33m+****************************************************************+\033[0m\n");
 
-	printf("\033[0;33m+***************************电话号码管理软件*********************+\033[0m\n");
-	printf("\033[0;33m|\t\t\t1. 添加					 |\033[0m\n");
-	printf("\033[0;33m|\t\t\t2. 删除					 |\033[0m\n");
-	printf("\033[0;33m|\t\t\t3. 查找					 |\033[0m\n");
-	printf("\033[0;33m|\t\t\t4. 显示所有记录				 |\033[0m\n");
-	printf("\033[0;33m|\t\t\t0. 退出					 |\033[0m\n");
-	printf("\033[0;33m+****************************************************************+\033[0m\n");
-	
-		
-
-		printf("input your choice#");
+		printf("\033[0;33minput your choice#\033[0m");
 		scanf("%d",&sel);
 		if((sel<0) || (sel>4))
 		{
+			fflush(stdin);//清空输入缓冲区，放置多输入了信息
+			
 			system("clear");
-			printf("\t\t\tinvalid choice!Try again\n");
+			printf("\t\t\33[0;31m无效选项，请重新输入\33[0m\n");
+			getchar();
 			continue;
 		}
 		return sel;
@@ -39,10 +38,9 @@ int management()
 	int sel;
 	int fg = 0;
 	do{
-
+		system("clear");
 		sel = manage_menu();
 
-		system("clear");
 		switch(sel)
 		{
 			case 1:
@@ -90,6 +88,7 @@ int login_menu()
 	char name[32] = {0};
 	char pass[32] = {0};
 	
+	system("clear");
 	printf("\033[0;96m+=================================================================+\033[0m\n");
 	printf("\033[0;96m| 								  |\033[0m\n");
 	printf("\033[0;96m| \t\t欢迎来到一口Linux的通讯录 			  |\033[0m\n");
@@ -98,9 +97,6 @@ int login_menu()
 	printf("\033[0;96m| 			关注公众号：一口Linux	                  |\033[0m\n");	
 	printf("\033[0;96m+=================================================================+\033[0m\n");
 
-
-
-	
     while(i > 0)
     {
 		printf("\033[0;96mplease input your password:\033[0m\n");
