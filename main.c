@@ -4,6 +4,7 @@
 
 static char password[]="yikoupeng";
 
+PHONE *phone_head;//链表头
 
 int manage_menu()
 {
@@ -33,38 +34,39 @@ int manage_menu()
 	}while(1);
 
 }
-int management()
+int management(PHONE *head)
 {
 	int sel;
 	int fg = 0;
 	do{
 		system("clear");
+
 		sel = manage_menu();
 
 		switch(sel)
 		{
 			case 1:
-				printf("add TBD\n");
+				create(head);
 				getchar();
-				getchar();
+				getchar();				
 				break;
 			case 2:
-				printf("del TBD\n");
+				delete(head);
 				getchar();
 				getchar();
 				break;
 			case 3:
-				printf("search TBD\n");
+				search(head);
 				getchar();
 				getchar();
 				break;
 			case 4:
-				printf("display TBD\n");
-				getchar();
-				getchar();
+				display(head);
+
 				break;
 			case 0:
 				printf("\t\t\tBye\n");
+				allfree(head);
 				getchar();
 				getchar();
 				fg = 1;
@@ -88,7 +90,6 @@ int login_menu()
 	char name[32] = {0};
 	char pass[32] = {0};
 	
-	system("clear");
 	printf("\033[0;96m+=================================================================+\033[0m\n");
 	printf("\033[0;96m| 								  |\033[0m\n");
 	printf("\033[0;96m| \t\t欢迎来到一口Linux的通讯录 			  |\033[0m\n");
@@ -125,6 +126,7 @@ int main(int argc, char **argv)
 {
 	int ret;
 
+	init(&phone_head);
 	ret = login_menu();
 
 	if (ret == 0)                        //密码正确，则给出提示
@@ -132,7 +134,7 @@ int main(int argc, char **argv)
 		printf("\33[0;32m登录成功了！！你真帅！！！\33[0m\n");
 		getchar();
 		getchar();
-		management();
+		management(phone_head);
 	}
 	else if (ret == -1)                  //如果三次输出密码均错误，则给出提示，并返回-1
 	{

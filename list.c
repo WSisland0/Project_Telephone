@@ -72,16 +72,20 @@ int delete(PHONE *head)
     printf("please input your want delete one name:\n");
     scanf("%s",name);
 
-    while(head->next != NULL)
+    printf("will delete user:%s\n",name);
+    while(p->next != NULL)
     {
-	if(strcmp(head->next->name,name) == 0)
-	{
-	    count++;
-	   PHONE *ptr = head->next;
-	    head->next = ptr->next;
-	    free(ptr);
-	}
+        if(strcmp(p->next->name,name) == 0)
+        {
+            count++;
+            ptemp = p->next;
+            p->next = ptemp->next;
+            free(ptemp);
+            break;
+        }
+        p = p->next;
     }
+
     if(count == 0)
     {
 		printf("No this one name!\n");
