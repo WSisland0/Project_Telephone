@@ -1,0 +1,218 @@
+/*************************
+******* git基础指令 ********
+**************************/
+
+
+/************ 初始配置git ************/
+$ git config --global user.name "Your Name"
+$ git config --global user.email "email@example.com"
+
+
+/************ 创建本地仓库 **************/
+//创建本地仓库----（.git）文件在此仓库生成
+$ mkdir learngit           //mkdir功能：创建目录
+$ cd learngit              //cd功能：跳转目录。  
+$ pwd                      //pwd功能：输出当前工作目录，如下
+/Users/michael/learngit
+/*****详细功能*********/
+/**********************
+*[cd ..]:返回上一级
+*[cd /c/Users/1/learngit]:转到learngit目录
+*[cd test]:当在learngit目录下，像转入该目录下的test目录，输入cd test即可
+************************/
+
+
+/*************** 初始化仓库 ******************/
+$ git init                 //输入指令
+Initialized empty Git repository in /Users/michael/learngit/.git/
+
+
+/*************** 创建txt等文本文件 **********/
+//创建txt等文本文件--windows和git创建皆可
+git版创建
+$vi readme.txt             //vi为编辑/创建指令+文件全称
+$i                         //输入i进入编辑状态，以下为编辑内容
+  Git is a version control system.
+  Git is free software.
+$q!/wq!                    //编辑结束后esc退出编辑态。输入q!:退出不保存。输入wq!:退出保存
+
+
+/**************** git add指令 ***************/
+//git add指令：将文件添加到暂留区
+$ git add readme.txt       //输入后无反馈为正常状态。格式：git add 文件全称
+
+
+/**************** git commit指令 *************/
+//git commit指令：将文件提交至仓库
+$ git commit -m "wrote a readme file"   //格式：git commit -m "备注"
+[master (root-commit) eaadf4e] wrote a readme file
+ 1 file changed, 2 insertions(+)        //结果显示，1个文件有改动，插入了两行内容
+ create mode 100644 readme.txt
+/*git add可以同时加入很多个文件，最后由commit统一提交。*/
+
+
+/******************* git status指令 ************/
+//git status指令：查看该目录的文件状态
+$ git status                         //一共有几种情况。1.文件区很干净、2.文件未add、3.文件未commit。照提示解决即可
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+ 
+/*********** git diff 指令：可以查看当前仓库修改的内容 **********/
+$ git diff readme.txt 
+diff --git a/readme.txt b/readme.txt
+index 46d49bf..9247db6 100644
+--- a/readme.txt
++++ b/readme.txt
+@@ -1,2 +1,2 @@
+-Git is a version control system.
++Git is a distributed version control system.
+ Git is free software.
+
+
+ /*************** git log指令：可以查看从最近到最远的提交日志 ************/
+ $ git log --pretty=oneline           // --pretty=oneline选加
+1094adb7b9b3807259d8cb349e7df1d4d6477073 (HEAD -> master) append GPL
+e475afc93c209a690c39c13a46716e8fa000c366 add distributed
+eaadf4e385e865d25c48e7ca9c8395c3f7dfaef0 wrote a readme file
+/*可以观察到有3个文件版本，分别是这几次修改的。一串数字是版本号，查找或修改以版本号的前几位即可*/
+
+
+/********** git reset 指令 *****************/
+//git reset 指令：退回版本，两种操作方法：1.HEAD^、2.reset+版本号
+$ git reset --hard HEAD^              //HEAD^表示退回上一个版本，HEAD^^表示退回上上一个版本，HEAD~100表示退回上100个版本
+$ git reset --soft HEAD^              //hard表示退回版本已提交状态，soft表示退回上版本未提交状态
+$ git reset --soft HEAD^              //mixed表示退回上版本已添加但未提交状态
+
+$ git reset --hard 1094a              //版本号一般为前几位即可
+HEAD is now at 83b0afe append GPL
+
+
+/*********** cat 指令：查看文件内容 ***********/
+$ cat readme.txt                      //cat 文件全称：查看该文件的内容
+Git is a distributed version control system.
+Git is free software.
+
+
+/************ git reflog指令：查看版本号 ****************/
+$ git reflog
+e475afc HEAD@{1}: reset: moving to HEAD^
+1094adb (HEAD -> master) HEAD@{2}: commit: append GPL
+e475afc HEAD@{3}: commit: add distributed
+eaadf4e HEAD@{4}: commit (initial): wrote a readme file
+
+
+//版本库：add加入至暂存区、commit将文件加入至分支。
+
+
+/******************* git checkout -- 文件全称：撤销工作区修改 **************/
+$ git checkout -- readme.txt
+/*****两种情况**********
+*命令git checkout -- readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
+一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+总之，就是让这个文件回到最近一次git commit或git add时的状态。即版本库里的文件
+***************************/
+
+
+/********** rm ：删除文件 **********/
+$ rm test.txt
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	deleted:    test.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+//删除后有两种选择，删除文件或退回至版本库的文件
+1.//git rm：删除文件
+$ git rm test.txt
+rm 'test.txt'
+//然后再commit，使工作区clean
+$ git commit -m "remove test.txt"
+[master d46f35e] remove test.txt
+ 1 file changed, 1 deletion(-)
+ delete mode 100644 test.txt
+2.//退回至版本库文件
+$ git checkout -- test.txt
+
+
+/**************************
+******** 远程仓库 ***********
+***************************/
+
+/******** SSH Key **********/
+//在git bash 中生成在.ssh目录中的id_rsa和id_rsa.pub文件，将公匙在gitee或github中保存
+$ ssh-keygen -t rsa -C "youremail@example.com"
+
+
+/******** git关联本地仓库 ********/
+/*在git中生成仓库，名字以leangit为例。将该仓库与本地仓库关联，在git中运行指令
+$ git remote add origin git@github.com:michaelliao/learngit.git
+本人仓库：
+$ git remote add origin git@github.com:WSisland0/learngit.git
+
+/* origin为远程库的名字，当有多个工程时，origin会重复，可以改其他名字
+** WSisland0为github的名字，不得有误*/
+
+
+/********** git推送代码 ***********/
+/* origin名字要与上面保持一致，若推送不成功，master和main都可试试。
+** -u参数第一次要加，后面可以简化。这个参数的功能是将本地分支master和远程分支master关联起来
+$ git push -u origin master          //第一次推送代码
+$ git push origin master             //当文件状态改变时，第二次推送至远程库
+
+Counting objects: 20, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (15/15), done.
+Writing objects: 100% (20/20), 1.64 KiB | 560.00 KiB/s, done.
+Total 20 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), done.
+To github.com:michaelliao/learngit.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+
+
+/************ git 删除远程库 **********/
+/* 如果添加的时候地址填写错了，活着就是想删除远程库，可以先查看信息：
+$ git remote -v
+
+origin  git@github.com:michaelliao/learn-git.git (fetch)
+origin  git@github.com:michaelliao/learn-git.git (push)
+
+//然后根据名字删除
+$ git remote rm origin          //origin为远程库名字
+
+
+/********** git克隆代码 ***********/
+$ git clone git@github.com:WSisland0/gitskills.git         //gitskills为github的仓库名字
+//这是ssh协议，还有在github上会提供案例，那是https协议，速度比ssh要慢
+Cloning into 'gitskills'...
+remote: Counting objects: 3, done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 3
+Receiving objects: 100% (3/3), done.
+
+若有本地 git 项目文件，想添加至自己的仓库。
+首先将该文件如test以windows的方式添加至本地仓库
+接着在git bash 上的目录调整至test，将该文件与原程库关联
+$ git remote add origin1 git@github.com:WSisland0/test.git
+注意远程库的名字不能重复，且要先在github建立好目标仓库
+
+若想下载别人的项目可以先克隆别人的项目至本地
+$git clone git@gitee.com:tdtxyzhh/c-language-microproject.git
+$cd c-language-microproject
+将本地代码库与远程库关联，然后推送至新的远程库
+注意：克隆别人得项目后不需要git init，此指令仅针对未初始化的新建仓库，
+而克隆仓库已经包含原有.git信息，如若初始化很可能会破坏原来的信息。
+$ git remote add origin5 git@github.com:WSisland0/microproject.git
+$ git push -u origin5 master
+创建新的分支，开始更改现有代码
+
