@@ -155,18 +155,19 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 
 
 /******** git关联本地仓库 ********/
-/*在git中生成仓库，名字以leangit为例。将该仓库与本地仓库关联，在git中运行指令
+/*在git中生成仓库，名字以leangit为例。将该仓库与本地仓库关联，在git中运行指令*/
 $ git remote add origin git@github.com:michaelliao/learngit.git
-本人仓库：
+//本人仓库：
 $ git remote add origin git@github.com:WSisland0/learngit.git
 
 /* origin为远程库的名字，当有多个工程时，origin会重复，可以改其他名字
 ** WSisland0为github的名字，不得有误*/
+$ git remote               //可以查看远程库的名字
 
 
 /********** git推送代码 ***********/
 /* origin名字要与上面保持一致，若推送不成功，master和main都可试试。
-** -u参数第一次要加，后面可以简化。这个参数的功能是将本地分支master和远程分支master关联起来
+** -u参数第一次要加，后面可以简化。这个参数的功能是将本地分支master和远程分支master关联起来*/
 $ git push -u origin master          //第一次推送代码
 $ git push origin master             //当文件状态改变时，第二次推送至远程库
 
@@ -182,7 +183,7 @@ Branch 'master' set up to track remote branch 'master' from 'origin'.
 
 
 /************ git 删除远程库 **********/
-/* 如果添加的时候地址填写错了，活着就是想删除远程库，可以先查看信息：
+/* 如果添加的时候地址填写错了，活着就是想删除远程库，可以先查看信息：*/
 $ git remote -v
 
 origin  git@github.com:michaelliao/learn-git.git (fetch)
@@ -200,19 +201,97 @@ remote: Counting objects: 3, done.
 remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 3
 Receiving objects: 100% (3/3), done.
 
-若有本地 git 项目文件，想添加至自己的仓库。
-首先将该文件如test以windows的方式添加至本地仓库
-接着在git bash 上的目录调整至test，将该文件与原程库关联
+/*若有本地 git 项目文件，想添加至自己的仓库。
+**首先将该文件如test以windows的方式添加至本地仓库
+**接着在git bash 上的目录调整至test，将该文件与原程库关联*/
 $ git remote add origin1 git@github.com:WSisland0/test.git
-注意远程库的名字不能重复，且要先在github建立好目标仓库
+/*注意远程库的名字不能重复，且要先在github建立好目标仓库，最好在远程库上标注origin1的名字，为后续做准备
 
-若想下载别人的项目可以先克隆别人的项目至本地
+**若想下载别人的项目可以先克隆别人的项目至本地**/
 $git clone git@gitee.com:tdtxyzhh/c-language-microproject.git
 $cd c-language-microproject
-将本地代码库与远程库关联，然后推送至新的远程库
-注意：克隆别人得项目后不需要git init，此指令仅针对未初始化的新建仓库，
-而克隆仓库已经包含原有.git信息，如若初始化很可能会破坏原来的信息。
+/*将本地代码库与远程库关联，然后推送至新的远程库
+**注意：克隆别人得项目后不需要git init，此指令仅针对未初始化的新建仓库，
+**而克隆仓库已经包含原有.git信息，如若初始化很可能会破坏原来的信息。*/
 $ git remote add origin5 git@github.com:WSisland0/microproject.git
 $ git push -u origin5 master
-创建新的分支，开始更改现有代码
+//创建新的分支，开始更改现有代码，合并并推送新的代码
 
+
+/****************************
+********** 分支管理 **********
+*****************************/
+
+/********** 创建与合并分支 ********/
+$ git checkout -b dev                  //创建并切换到dev分支、-b参数表示创建并切换，相当于以下两条指令
+$ git switch -c dev                    //也可以用这条指令
+
+Switched to a new branch 'dev'
+
+$ git branch dev                       //创建dev分支
+$ git checkout dev                     //切换到dev分支
+Switched to branch 'dev'
+
+
+/********** 查看当前分支 ********/
+$ git branch                           //git branch命令会列出所有分支，当前分支前面会标一个*号。
+* dev
+  master
+//更改完后正常 add 与 commit 指令
+
+
+/********** 切换并合并分支 ********/
+$ git checkout master                   //切换为master分支
+$ git merge dev                        //将dev分支的工作成果合并到master分支
+
+
+/********** checkout & switch 切换命令 *************/
+//我们注意到切换分支用$ git checkout master、但撤销修改也是git checkout -- <file>
+//一条命令，两个作用，所以还可以用switch切换分支
+ $ git switch master
+
+
+/********** 删除分支 *************/
+$ git branch -d dev 
+
+Deleted branch dev (was b17d20e).
+
+
+/*********** 解决冲突 ************/
+//在新的分支feature1中更改，改完后 add 和 commit ，切换为master分支（并未合并）
+//此时git bash 会提醒当前的master分支比远程的master分支要超前一个提交
+//在master分支上更改一些内容，合并分支feature1
+//此时会提示有些冲突，git status观察到果然有冲突，只能手动更改合并后的master分支的内容
+$ cat readme.txt
+
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+Git has a mutable index called stage.
+Git tracks changes of files.
+<<<<<<< HEAD
+Creating a new branch is quick & simple.
+=======
+Creating a new branch is quick AND simple.
+>>>>>>> feature1
+//Git用<<<<<<<，=======，>>>>>>>标记出不同分支的内容，我们修改后保存、add、commit
+//还可以用git log观察分支的合并情况
+$ git log 
+$ git log --graph
+//最后删除feature1的分支
+$ git branch -d feature1
+
+
+/************** 分支管理策略 ****************/
+//通常合并分支时，git 会用Fast forward 模式，但在这种模式下，删除分支会删除分支的commit信息
+//如果强制禁用Fast forward 模式，git会在merge时生成一个新的commit，这样分支历史上就可以看到分支信息
+$ git merge --no-ff -m "merge with no-ff" dev
+Merge made by the 'recursive' strategy.
+ readme.txt | 1 +
+ 1 file changed, 1 insertion(+)
+//合并分支时，--no-ff是禁用Fast forward 模式
+//-m""是将commit信息写进去
+
+//在实际开发中，我们应该按照几个基本原则进行分支管理：
+//首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+//那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；
+//你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。

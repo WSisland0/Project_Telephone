@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "git.txt",
               "ToolTip": "C:\\Users\\1\\learngit\\test\\git.txt",
               "RelativeToolTip": "git.txt",
-              "ViewState": "AgIAACEAAAAAAAAAAAAAACQBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAMAAAAAAAAAAAAAqwNkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-06-24T07:11:36.657Z",
               "EditorCaption": ""
@@ -55,7 +55,8 @@
               "RelativeToolTip": "list.c",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-06-24T06:39:01.168Z"
+              "WhenOpened": "2025-06-24T06:39:01.168Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -67,7 +68,8 @@
               "RelativeToolTip": "main.c",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-06-24T06:38:56.928Z"
+              "WhenOpened": "2025-06-24T06:38:56.928Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -75,11 +77,12 @@
               "Title": "phone.h",
               "DocumentMoniker": "C:\\Users\\1\\learngit\\test\\phone.h",
               "RelativeDocumentMoniker": "phone.h",
-              "ToolTip": "C:\\Users\\1\\learngit\\test\\phone.h",
-              "RelativeToolTip": "phone.h",
+              "ToolTip": "C:\\Users\\1\\learngit\\test\\phone.h*",
+              "RelativeToolTip": "phone.h*",
               "ViewState": "AgIAAAAAAAAAAAAAAADwvxQAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-06-24T06:38:46.235Z"
+              "WhenOpened": "2025-06-24T06:38:46.235Z",
+              "EditorCaption": ""
             }
           ]
         }
